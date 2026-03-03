@@ -1,0 +1,14 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <https://TianTangvanhoecke.github.io/KG_Lab2/vocab.ttl#> .
+
+:Person a rdfs:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:comment "A human being."@en .
+
+:hasFullName a rdf:Property ;
+    rdfs:label "has full name"@en ;
+    rdfs:comment "The complete name of a person."@en ;
+    rdfs:domain :Person ;
+    rdfs:range xsd:string .

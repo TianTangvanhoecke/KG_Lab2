@@ -5,7 +5,7 @@
 
 @prefix : <https://TianTangvanhoecke.github.io/KG_Lab2/data.ttl#> .
 
-:#me
+:me
   a vocab:Person, vocab:Student ;
   vocab:hasFullName "Tian Tang"@en ;
   vocab:hasStudentID "s123456" .

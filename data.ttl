@@ -1,6 +1,6 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix vocab: <https://TianTangvanhoecke.github.io/KG_Lab2/vocab.ttl#> .
 
 @prefix : <https://TianTangvanhoecke.github.io/KG_Lab2/data.ttl#> .
@@ -8,4 +8,7 @@
 :me
   a vocab:Person, vocab:Student ;
   vocab:hasFullName "Tian Tang"@en ;
-  vocab:hasStudentID "s123456" .
+  vocab:hasNationality "Chinese"@en ;
+  vocab:hasAge "24"^^xsd:integer ;
+  vocab:hasStudentID "s123456" ;
+  vocab:knows <https://another-student.github.io/data.ttl#me> .

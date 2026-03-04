@@ -12,3 +12,33 @@
     rdfs:comment "The complete name of a person."@en ;
     rdfs:domain :Person ;
     rdfs:range xsd:string .
+
+:hasNationality a rdf:Property ;
+    rdfs:label "has nationality"@en ;
+    rdfs:comment "The nationality of a person"@en ;
+    rdfs:domain :Person ;
+    rdfs:range xsd:string .
+
+:hasAge a rdf:Property ;
+    rdfs:label "has age"@en ;
+    rdfs:comment "Age of a person"@en ;
+    rdfs:domain :Person ;
+    rdfs:range xsd:integer .
+
+:knows a rdf:Property ;
+    rdfs:label "knows"@en ;
+    rdfs:comment "A relationship between two people."@en ;
+    rdfs:domain :Person ;
+    rdfs:range :Person .
+
+:Student a rdfs:Class ;
+    rdfs:label "Student"@en ;
+    rdfs:comment "A person who is enrolled in an educational institution."@en ;
+    rdfs:subClassOf :Person .  
+
+:hasStudentID a rdf:Property ;
+    rdfs:label "has student ID"@en ;
+    rdfs:comment "Assigns a unique identifier to a student within an educational institution."@en ;
+    rdfs:domain :Student ;  # The "Owner" of the ID
+    rdfs:range xsd:string . # The "Value" of the ID (just text)
+ .

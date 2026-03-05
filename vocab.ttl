@@ -39,6 +39,5 @@
 :hasStudentID a rdf:Property ;
     rdfs:label "has student ID"@en ;
     rdfs:comment "Assigns a unique identifier to a student within an educational institution."@en ;
-    rdfs:domain :Student ;  # The "Owner" of the ID
-    rdfs:range xsd:string . # The "Value" of the ID (just text)
- .
+    rdfs:domain :Student ; 
+    rdfs:range xsd:string . 

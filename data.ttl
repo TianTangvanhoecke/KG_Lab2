@@ -11,4 +11,4 @@
   vocab:hasNationality "Chinese"@en ;
   vocab:hasAge "24"^^xsd:integer ;
   vocab:hasStudentID "s123456" ;
-  vocab:knows <https://another-student.github.io/data.ttl#me> .
+  vocab:knows <https://pikajojo.github.io/Knowledge_Graph_UGent_Lab2/data.ttl#me> .

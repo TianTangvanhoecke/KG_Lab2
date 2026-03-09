@@ -57,3 +57,9 @@
     rdfs:comment "Relates a resource to another resource that describes the same thing." ;
     rdfs:domain rdfs:Resource ;
     rdfs:range rdfs:Resource .
+
+:courseName a rdf:Property ;
+    rdfs:label "has full course name"@en ;
+    rdfs:comment "The complete name of a course."@en ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:string .

@@ -41,3 +41,13 @@
     rdfs:comment "Assigns a unique identifier to a student within an educational institution."@en ;
     rdfs:domain :Student ; 
     rdfs:range xsd:string . 
+
+:Course a rdfs:Class ;
+    rdfs:label "Course" ;
+    rdfs:comment "A course offered at an educational institution." .
+
+:enrolledIn a rdf:Property ;
+    rdfs:label "enrolled in" ;
+    rdfs:comment "Relates a student to a course they are enrolled in." ;
+    rdfs:domain :Student ;
+    rdfs:range :Course .

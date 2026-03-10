@@ -7,7 +7,7 @@
 
 :me
   a vocab:Person, vocab:Student ;
-  vocab:hasFullName "Tian Tang"@en ;
+  vocab:hasFullName "Tian Tang" ;
   vocab:hasNationality "Chinese"@en ;
   vocab:hasAge "24"^^xsd:integer ;
   vocab:hasStudentID "s123456" ;

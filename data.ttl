@@ -3,7 +3,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix vocab: <https://tiantangvanhoecke.github.io/KG_Lab2/vocab.ttl#> .
 
-@prefix : <https://TianTangvanhoecke.github.io/KG_Lab2/data.ttl#> .
+@prefix : <https://tiantangvanhoecke.github.io/KG_Lab2/data.ttl#> .
 
 :me
   a vocab:Person, vocab:Student ;

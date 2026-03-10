@@ -1,7 +1,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix vocab: <https://TianTangvanhoecke.github.io/KG_Lab2/vocab.ttl#> .
+@prefix vocab: <https://tiantangvanhoecke.github.io/KG_Lab2/vocab.ttl#> .
 
 @prefix : <https://TianTangvanhoecke.github.io/KG_Lab2/data.ttl#> .
 

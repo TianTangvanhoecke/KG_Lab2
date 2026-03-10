@@ -13,7 +13,7 @@
   vocab:hasStudentID "s123456" ;
   vocab:enrolledIn :knowledge-graphs-2025 ;
   vocab:knows <https://seppesantens.github.io/rdf-lab2/data.ttl#me> ,
-              <https://pikajojo.github.io/Knowlege_Graph_Lab2/data.ttl#me>  .
+              <https://pikajojo.github.io/Knowledge_Graph_UGent_Lab2/data.ttl#me>  .
 
 :knowledge-graphs-2025 a vocab:Course ;
     vocab:courseName "Knowledge Graphs 2025" ;

@@ -11,13 +11,13 @@
     rdfs:label "has full name"@en ;
     rdfs:comment "The complete name of a person."@en ;
     rdfs:domain :Person ;
-    rdfs:range xsd:string .
+    rdfs:range rdfs:Literal .
 
 :hasNationality a rdf:Property ;
     rdfs:label "has nationality"@en ;
     rdfs:comment "The nationality of a person"@en ;
     rdfs:domain :Person ;
-    rdfs:range xsd:string .
+    rdfs:range rdfs:Literal .
 
 :hasAge a rdf:Property ;
     rdfs:label "has age"@en ;

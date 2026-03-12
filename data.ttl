@@ -14,6 +14,7 @@
   vocab:enrolledIn :knowledge-graphs-2025 ;
   vocab:knows <https://seppesantens.github.io/rdf-lab2/data.ttl#me> ,
               <https://janaverl.github.io/knowledge_graphs_lab2/0001.ttl#me> ,
+              <https://anyplin.github.io/Knowledge-Graphs/data.ttl#Anna> ,
               <https://pikajojo.github.io/Knowledge_Graph_UGent_Lab2/data.ttl#me>  .
 
 :knowledge-graphs-2025 a vocab:Course ;

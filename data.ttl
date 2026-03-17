@@ -1,22 +1,80 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix vocab: <https://tiantangvanhoecke.github.io/KG_Lab2/vocab.ttl#> .
+@prefix vocab: <https://TianTangvanhoecke.github.io/KG_Lab2/vocab.ttl#> .
 
-@prefix : <https://tiantangvanhoecke.github.io/KG_Lab2/data.ttl#> .
+@prefix : <https://TianTangvanhoecke.github.io/KG_Lab2/data.ttl#> .
 
 :me
   a vocab:Person, vocab:Student ;
-  vocab:hasFullName "Tian Tang" ;
-  vocab:hasNationality "Chinese"@en ;
-  vocab:hasAge "24"^^xsd:integer ;
+  vocab:name "Tian Tang" ;
+  vocab:hasNationality "Chinese" ;
+  vocab:hasAge 38^^xsd:integer ;
+  vocab:hasHobby :running ;
   vocab:hasStudentID "s123456" ;
   vocab:enrolledIn :knowledge-graphs-2025 ;
   vocab:knows <https://seppesantens.github.io/rdf-lab2/data.ttl#me> ,
-              <https://janaverl.github.io/knowledge_graphs_lab2/0001.ttl#me> ,
-              <https://anyplin.github.io/Knowledge-Graphs/data.ttl#Anna> ,
-              <https://pikajojo.github.io/Knowledge_Graph_UGent_Lab2/data.ttl#me>  .
+              <https://pikajojo.github.io/Knowlege_Graph_Lab2/data.ttl#me>  .
+
+:annaT
+  a vocab:Person, vocab:Student ;
+  vocab:name "Anna Tang" ;
+  vocab:hasNationality "Chinese" ;
+  vocab:hasParent :me ;
+  vocab:hasAge 5^^xsd:integer ;
+  vocab:enrolledIn :derdekleuter ;
+  vocab:likesFictionalCharacter :mr_bean ;
+  vocab:hasHobby :drawing .
+
+:rowanAtkinson a vocab:Person ;
+  vocab:name "Rowan Sebastian Atkinson" ;
+  vocab:hasNationality "English" ;
+  vocab:hasAge 71^^xsd:integer ;
+  vocab:hasHobby :carRacing .
+
+:mr_bean a vocab:FictionalCharacter ;
+  vocab:name "Mr Bean" ;
+  vocab:playedBy :rowanAtkinson .
+
+:unknownPerson a vocab:Person ;
+  vocab:name "Unknown" .
 
 :knowledge-graphs-2025 a vocab:Course ;
-    vocab:courseName "Knowledge Graphs 2025" ;
-    vocab:seeAlso <https://studiekiezer.ugent.be/studiefiche/nl/E018160/2025> .
+    vocab:name "Knowledge Graphs 2025" ;
+    rdfs:seeAlso <https://studiekiezer.ugent.be/studiefiche/nl/E018160/2025> .
+
+:derdekleuter a vocab:Course ;
+  vocab:name "Leeuwen- en Giraffenklas" ;
+  rdfs:seeAlso <https://derdekleutervcz.blogspot.com/> .
+
+:running a vocab:Hobby . 
+:drawing a vocab:Hobby .
+:carRacing a vocab:Hobby .
+
+:london a vocab:Place .
+:zwevegem a vocab:Place .
+:gentbrugge a vocab:Place .
+
+:mrBeanPhoto a vocab:Photo ;
+    vocab:hasTitle "Mr Bean's typical smile" ;
+    vocab:hasCreator :unknownPerson ;
+    vocab:description "A photo of Mr Bean, the fictional character played by Rowan Atkinson." ;
+    vocab:depicts :mr_bean ;
+    vocab:takenAt :london ;
+    vocab:fileLocation <https://commons.wikimedia.org/wiki/Category:Mr._Bean#/media/File:Mr._Bean_2007.jpg> .
+
+:meRunningPhoto a vocab:Photo ;
+  vocab:hasTitle "Bashirs run sportshots";
+  vocab:hasCreator :unknownPerson ;
+  vocab:description "A photo of me running in the Bashirs half marathon event in GentBrugge" ;
+  vocab:depictsPerson :me ;
+  vocab:takenAt :gentbrugge ;
+  vocab:fileLocation <https://sportshots.ai/nl/events/bashirs-run-2026?search=tian&photo=0221a1a5-da81-448a-b45a-79893e7a1803> ;
+
+:annaTClassPhoto a vocab:Photo ;
+  vocab:hasTitle "Leeuwen Class Photo";
+  vocab:hasCreator :unknownPerson ;
+  vocab:description "A funny class photo of my daugther Anna in the school" ;
+  vocab:depictsPerson :annaT ;
+  vocab:takenAt :zwevegem ;
+  vocab:fileLocation <https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA3W16E9P6TAlvh-yy1MwPy-A421xzEMZbSLhXmPK46HO_gIaM50bfFnGdJk4jW-JxKWl0ayN_bPfawFspX4OeQw8iIoWxQQJ89G5q-Y2ce88bv_JOtEB4eD3Fv3g_mG7njkWQExizn-uQtkHd62FzgGGypTCP5PBb6oLAQxd1eu0mBTIJkxVavTQDVb0/s2048/565dc16a-50e0-45a6-b139-8f36ce6e3980.jpg> .

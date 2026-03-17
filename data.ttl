@@ -9,7 +9,7 @@
   a vocab:Person, vocab:Student ;
   vocab:name "Tian Tang" ;
   vocab:hasNationality "Chinese" ;
-  vocab:hasAge 38^^xsd:integer ;
+  vocab:hasAge 38 ;
   vocab:hasHobby :running ;
   vocab:hasStudentID "s123456" ;
   vocab:enrolledIn :knowledge-graphs-2025 ;
@@ -21,7 +21,7 @@
   vocab:name "Anna Tang" ;
   vocab:hasNationality "Chinese" ;
   vocab:hasParent :me ;
-  vocab:hasAge 5^^xsd:integer ;
+  vocab:hasAge 5 ;
   vocab:enrolledIn :derdekleuter ;
   vocab:likesFictionalCharacter :mr_bean ;
   vocab:hasHobby :drawing .
@@ -29,7 +29,7 @@
 :rowanAtkinson a vocab:Person ;
   vocab:name "Rowan Sebastian Atkinson" ;
   vocab:hasNationality "English" ;
-  vocab:hasAge 71^^xsd:integer ;
+  vocab:hasAge 71 ;
   vocab:hasHobby :carRacing .
 
 :mr_bean a vocab:FictionalCharacter ;

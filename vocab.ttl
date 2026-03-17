@@ -2,19 +2,23 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix : <https://TianTangvanhoecke.github.io/KG_Lab2/vocab.ttl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
 :Person a rdfs:Class ;
     rdfs:label "Person"@en ;
-    rdfs:comment "A human being."@en .
+    rdfs:comment "A human being."@en ;
+    rdfs:subClassOf foaf:Person .
 
 :Hobby a rdfs:Class ;
     rdfs:label "Hobby"@en ;
-    rdfs:comment "An activity a person likes and enjoys to do in the free time" .
+    rdfs:comment "An activity a person likes and enjoys to do in the free time"@en .
 
 :name a rdf:Property ;
     rdfs:label "name" ;
     rdfs:comment "A name of any resource." ;
-    rdfs:range rdfs:Literal .
+    rdfs:domain rdfs:Resource ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf foaf:name .
 
 :hasNationality a rdf:Property ;
     rdfs:label "has nationality"@en ;
@@ -26,7 +30,8 @@
     rdfs:label "has age"@en ;
     rdfs:comment "Age of a person"@en ;
     rdfs:domain :Person ;
-    rdfs:range xsd:integer .
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf foaf:age .
 
 :hasParent a rdf:Property ;
     rdfs:label "has parent"@en ;
@@ -50,7 +55,8 @@
     rdfs:label "knows"@en ;
     rdfs:comment "A relationship between two people."@en ;
     rdfs:domain :Person ;
-    rdfs:range :Person .
+    rdfs:range :Person ;
+    rdfs:subPropertyOf foaf:knows .
 
 :Student a rdfs:Class ;
     rdfs:label "Student"@en ;
@@ -65,11 +71,11 @@
 
 :Course a rdfs:Class ;
     rdfs:label "Course" ;
-    rdfs:comment "A course offered at an educational institution." .
+    rdfs:comment "A course offered at an educational institution."@en .
 
 :enrolledIn a rdf:Property ;
     rdfs:label "enrolled in" ;
-    rdfs:comment "Relates a student to a course they are enrolled in." ;
+    rdfs:comment "Relates a student to a course they are enrolled in."@en ;
     rdfs:domain :Student ;
     rdfs:range :Course .
 
@@ -79,56 +85,61 @@
 
 :playedBy a rdf:Property ;
     rdfs:label "Played By" ;
-    rdfs:comment "The real-world actor who portrays this fictional character" ;
+    rdfs:comment "The real-world actor who portrays this fictional character"@en ;
     rdfs:domain :FictionalCharacter ;
     rdfs:range :Person .
 
 :Photo a rdfs:Class ;
     rdfs:label "Photo"@en ;
-    rdfs:comment "A digital photo found on the web"@en .
+    rdfs:comment "A digital photo found on the web"@en ;
+    rdfs:subClassOf foaf:Image .
 
 :hasTitle a rdf:Property ;
     rdfs:label "Photo Title" ;
     rdfs:comment "Title of Photo" ;
     rdfs:domain :Photo ;
-    rdfs:range rdfs:Literal .
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf foaf:name .
 
 :hasCreator a rdf:Property ;
     rdfs:label "Creator" ;
-    rdfs:comment "The person who took the photograph" ;
+    rdfs:comment "The person who took the photograph"@en ;
     rdfs:domain :Photo ;
-    rdfs:range :Person . 
+    rdfs:range :Person ;
+    rdfs:subPropertyOf foaf:maker .
 
 :depicts a rdf:Property ;
     rdfs:label "depicts"@en ;
     rdfs:comment "Something that the photo shows (person, character, object, etc.)"@en ;
     rdfs:domain :Photo ;
-    rdfs:range rdfs:Resource .
-    
+    rdfs:range rdfs:Resource ;
+    rdfs:subPropertyOf foaf:depicts .
+
 :depictsPerson a rdf:Property ;
     rdfs:label "Depicts Person" ;
-    rdfs:comment "A person shown in the photograph" ;
+    rdfs:comment "A person shown in the photograph"@en ;
     rdfs:domain :Photo ;
-    rdfs:range :Person .
+    rdfs:range :Person ;
+    rdfs:subPropertyOf foaf:depicts .
 
 :takenAt a rdf:Property ;
     rdfs:label "Location" ;
-    rdfs:comment "The place where the photo was captured" ;
+    rdfs:comment "The place where the photo was captured"@en ;
     rdfs:domain :Photo ;
     rdfs:range :Place .
 
 :description a rdf:Property ;
     rdfs:label "Description" ;
-    rdfs:comment "A short summary of the photo content" ;
+    rdfs:comment "A short summary of the photo content"@en ;
     rdfs:domain :Photo ;
     rdfs:range rdfs:Literal .
 
 :fileLocation a rdf:Property ;
     rdfs:label "File URL" ;
-    rdfs:comment "The web address where the image file is hosted" ;
+    rdfs:comment "The web address where the image file is hosted"@en ;
     rdfs:domain :Photo ;
     rdfs:range rdfs:Resource . # Range is a Resource (URL), not just text
 
 :Place a rdfs:Class ;
     rdfs:label "Place" ;
-    rdfs:comment "A physical location where an event or activity took place." .
+    rdfs:comment "A physical location where an event or activity took place"@en .

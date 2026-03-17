@@ -69,7 +69,7 @@
   vocab:description "A photo of me running in the Bashirs half marathon event in GentBrugge" ;
   vocab:depictsPerson :me ;
   vocab:takenAt :gentbrugge ;
-  vocab:fileLocation <https://sportshots.ai/nl/events/bashirs-run-2026?search=tian&photo=0221a1a5-da81-448a-b45a-79893e7a1803> ;
+  vocab:fileLocation <https://sportshots.ai/nl/events/bashirs-run-2026?search=tian&photo=0221a1a5-da81-448a-b45a-79893e7a1803> .
 
 :annaTClassPhoto a vocab:Photo ;
   vocab:hasTitle "Leeuwen Class Photo";

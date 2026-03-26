@@ -1,0 +1,218 @@
+@prefix sc:    <http://scample.org/steelcord#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+# Ontology Header
+#################################################################
+
+<http://scample.org/steelcord>
+    rdf:type owl:Ontology ;
+    rdfs:label "Steel Cord Manufacturing Ontology (Core Vocabulary)" .
+
+#################################################################
+# Classes
+#################################################################
+
+sc:MaterialEntity rdf:type owl:Class .
+
+sc:MaterialArtifact rdf:type owl:Class ;
+    rdfs:subClassOf sc:MaterialEntity .
+
+sc:ManufacturingProcess rdf:type owl:Class .
+
+sc:PlanSpecification rdf:type owl:Class .
+
+sc:Equipment rdf:type owl:Class .
+
+sc:MaterialProperty rdf:type owl:Class .
+
+sc:ProcessParameter rdf:type owl:Class .
+
+sc:MaterialSpecification rdf:type owl:Class .
+
+sc:ProcessParameterSpecification rdf:type owl:Class .
+
+sc:Measurement rdf:type owl:Class .
+
+sc:ProcessCharacteristic rdf:type owl:Class .
+
+#################################################################
+# Object Properties
+#################################################################
+
+sc:prescribedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:ManufacturingProcess ;
+    rdfs:range sc:PlanSpecification .
+
+sc:participatesIn rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:Equipment ;
+    rdfs:range sc:ManufacturingProcess .
+
+sc:realizes rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:Equipment ;
+    rdfs:range sc:PlanSpecification .
+
+sc:hasInput rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:ManufacturingProcess ;
+    rdfs:range sc:MaterialEntity .
+
+sc:hasOutput rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:ManufacturingProcess ;
+    rdfs:range sc:MaterialArtifact .
+
+sc:hasMaterialSpecification rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:MaterialArtifact ;
+    rdfs:range sc:MaterialSpecification .
+
+sc:hasParameter rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:PlanSpecification ;
+    rdfs:range sc:ProcessParameterSpecification .
+
+sc:specifiesProperty rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:MaterialSpecification ;
+    rdfs:range sc:MaterialProperty .
+
+sc:specifiesParameter rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:ProcessParameterSpecification ;
+    rdfs:range sc:ProcessParameter .
+
+sc:hasMeasurement rdf:type owl:ObjectProperty ;
+    rdfs:range sc:Measurement .
+
+sc:measuresProperty rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:Measurement ;
+    rdfs:range sc:MaterialProperty .
+
+sc:measuresParameter rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:Measurement ;
+    rdfs:range sc:ProcessParameter .
+
+sc:hasCharacteristic rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:ManufacturingProcess ;
+    rdfs:range sc:ProcessCharacteristic .
+
+#################################################################
+# Data Properties
+#################################################################
+
+sc:targetValue rdf:type owl:DatatypeProperty ;
+    rdfs:range xsd:decimal .
+
+sc:minValue rdf:type owl:DatatypeProperty ;
+    rdfs:range xsd:decimal .
+
+sc:maxValue rdf:type owl:DatatypeProperty ;
+    rdfs:range xsd:decimal .
+
+sc:measuredValue rdf:type owl:DatatypeProperty ;
+    rdfs:range xsd:decimal .
+
+sc:unit rdf:type owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+sc:machineType rdf:type owl:DatatypeProperty ;
+    rdfs:domain sc:DrawingMachine ;
+    rdfs:range xsd:string .
+#################################################################
+# Drawing Process Hierarchy
+#################################################################
+
+sc:DrawingProcess rdf:type owl:Class ;
+    rdfs:subClassOf sc:ManufacturingProcess ;
+    rdfs:label "Drawing Process" ;
+    rdfs:comment "Any wire drawing process that reduces diameter through dies." .
+
+sc:DryDrawingProcess rdf:type owl:Class ;
+    rdfs:subClassOf sc:DrawingProcess ;
+    rdfs:label "Dry Drawing Process" ;
+    rdfs:comment "Drawing process using dry lubrication (soap powder) and multiple dies." .
+
+sc:WetDrawingProcess rdf:type owl:Class ;
+    rdfs:subClassOf sc:DrawingProcess ;
+    rdfs:label "Wet Drawing Process" ;
+    rdfs:comment "Drawing process using wet lubrication and cooling." .
+
+
+#################################################################
+# Drawing Plan Specification
+#################################################################
+
+sc:DrawingPlanSpecification rdf:type owl:Class ;
+    rdfs:subClassOf sc:PlanSpecification ;
+    rdfs:label "Drawing Plan Specification" ;
+    rdfs:comment "Plan/SOP/recipe defining parameters for drawing operations (speed, die series, soap type, reduction)." .
+
+
+#################################################################
+# Materials Related to Drawing
+#################################################################
+
+sc:WireRod rdf:type owl:Class ;
+    rdfs:subClassOf sc:MaterialArtifact ;
+    rdfs:label "Wire Rod" ;
+    rdfs:comment "Input material for first drawing stage, typically 5.5 mm to 8 mm diameter." .
+
+sc:DrawnWire rdf:type owl:Class ;
+    rdfs:subClassOf sc:MaterialArtifact ;
+    rdfs:label "Drawn Wire" ;
+    rdfs:comment "Output material from drawing process; reduced diameter intermediate wire." .
+
+
+#################################################################
+# Equipment Used in Drawing
+#################################################################
+
+sc:DrawingMachine rdf:type owl:Class ;
+    rdfs:subClassOf sc:Equipment ;
+    rdfs:label "Drawing Machine" ;
+    rdfs:comment "Equipment performing wire drawing, includes capstan, dies, speed control." .
+
+sc:DiePack rdf:type owl:Class ;
+    rdfs:subClassOf sc:Equipment ;
+    rdfs:label "Die Pack" ;
+    rdfs:comment "Series of drawing dies used to reduce diameter." .
+
+sc:LubricationSystem rdf:type owl:Class ;
+    rdfs:subClassOf sc:Equipment ;
+    rdfs:label "Lubrication System" ;
+    rdfs:comment "Lubrication system providing soap or wet lubricant during drawing." .
+
+
+#################################################################
+# Material Properties Relevant to Drawing
+#################################################################
+sc:Diameter rdf:type sc:MaterialProperty ;
+    rdfs:label "Diameter" ;
+    rdfs:comment "Diameter of the wire, typically decreases through drawing passes." .
+
+sc:TensileStrength rdf:type sc:MaterialProperty ;
+    rdfs:label "Tensile Strength" ;
+    rdfs:comment "Mechanical strength of wire, increases with drawing due to strain hardening." .
+
+sc:CarbonContent rdf:type sc:MaterialProperty ;
+    rdfs:label "Carbon Content" ;
+    rdfs:comment "Carbon content of the steel wire; affects drawability and strength." .
+
+#################################################################
+# Process Parameters Relevant to Drawing
+#################################################################
+
+sc:DrawingSpeed rdf:type sc:ProcessParameter ;
+    rdfs:label "Drawing Speed" ;
+    rdfs:comment "Line speed (m/s) during drawing process; affects energy use and quality." .
+
+sc:LubricantType rdf:type sc:ProcessParameter ;
+    rdfs:label "Lubricant Type" ;
+    rdfs:comment "Type of lubrication used (e.g., Na‑soap, Ca‑soap, oil‑based)." .
+
+sc:DieMaterial rdf:type sc:ProcessParameter ;
+    rdfs:label "Die Material" ;
+    rdfs:comment "Material of drawing dies (e.g., tungsten carbide, PCD)." .
+
+sc:DieAngle rdf:type sc:ProcessParameter ;
+    rdfs:label "Die Angle" ;
+    rdfs:comment "(half) Angle of drawing dies (e.g., 5, 7, 9, 11)." .
+

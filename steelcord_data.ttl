@@ -1,0 +1,186 @@
+@prefix sc:    <http://scample.org/steelcord#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+# MATERIALS (Input & Output)
+#################################################################
+
+sc:WireRod_5500um
+    a sc:WireRod ;
+    sc:hasMaterialSpecification sc:DiameterSpec_5500um ;
+    sc:hasMaterialSpecification sc:CarbonContentSpec_08percent ;
+    sc:hasMaterialSpecification sc:TensileStrength_1177MPa;
+    sc:hasMeasurement sc:DiameterMeasurement_RodBatch ;
+    rdfs:label "Wire Rod 5.5mm (Batch 07)" .
+
+sc:DrawnWire_1800um
+    a sc:DrawnWire ;
+    sc:hasMaterialSpecification sc:DiameterSpec_1800um ;
+    sc:hasMaterialSpecification sc:TensileStrength_2117MPa;
+    sc:hasMeasurement sc:DiameterMeasurement_Output ;
+    rdfs:label "Drawn Wire 1.8mm (Output)" .
+
+
+#################################################################
+# MATERIAL SPECIFICATIONS (target)
+#################################################################
+
+sc:DiameterSpec_5500um
+    a sc:MaterialSpecification ;
+    sc:specifiesProperty sc:Diameter ;
+    sc:targetValue "5.5"^^xsd:decimal ;
+    sc:unit "mm" ;
+    rdfs:label "Diameter Spec 5.5mm" .
+
+sc:DiameterSpec_1800um
+    a sc:MaterialSpecification ;
+    sc:specifiesProperty sc:Diameter ;
+    sc:targetValue "1.8"^^xsd:decimal ;
+    sc:unit "mm" ;
+    rdfs:label "Diameter Spec 1.8mm" .
+
+sc:CarbonContentSpec_08percent 
+    a sc:MaterialSpecification ;
+    sc:specifiesProperty sc:CarbonContent ;
+    sc:targetValue "0.8"^^xsd:decimal ;
+    sc:unit "%" ;
+    rdfs:label "Carbon Content equivalent" .
+
+sc:TensileStrength_1177MPa 
+    a sc:MaterialSpecification ;
+    sc:specifiesProperty sc:TensileStrength ;
+    sc:targetValue "1177"^^xsd:decimal ;
+    sc:unit "MPa" ;
+    rdfs:label "Tensile Strength spec 1177MPa" .
+
+sc:TensileStrength_2117MPa 
+    a sc:MaterialSpecification ;
+    sc:specifiesProperty sc:TensileStrength ;
+    sc:targetValue "2117"^^xsd:decimal ;
+    sc:unit "MPa" ;
+    rdfs:label "Tensile Strength spec 2117MPa" .
+ 
+#################################################################
+# MATERIAL MEASUREMENTS (observed)
+#################################################################
+
+sc:DiameterMeasurement_RodBatch
+    a sc:Measurement ;
+    sc:measuresProperty sc:Diameter ;
+    sc:measuredValue "5.49"^^xsd:decimal ;
+    sc:unit "mm" ;
+    rdfs:label "Measured diameter of rod batch" .
+
+sc:DiameterMeasurement_Output
+    a sc:Measurement ;
+    sc:measuresProperty sc:Diameter ;
+    sc:measuredValue "1.802"^^xsd:decimal ;
+    sc:unit "mm" ;
+    rdfs:label "Measured diameter of drawn wire" .
+
+
+#################################################################
+# DRAWING PLAN SPECIFICATION (recipe)
+#################################################################
+
+sc:DrawingPlan_Recipe123
+    a sc:DrawingPlanSpecification ;
+    sc:hasParameter sc:SpeedSpec_35mps ;
+    sc:hasParameter sc:DieAngle_9d ;
+    sc:hasParameter sc:DieMaterialSpec_TungstenCarbide ;
+    sc:hasParameter sc:LubricantSpec_LF220 ;
+    rdfs:label "Drawing Plan Recipe 123" .
+
+
+#################################################################
+# PROCESS PARAMETER SPECIFICATIONS (target settings)
+#################################################################
+
+sc:SpeedSpec_300mpm
+    a sc:ProcessParameterSpecification ;
+    sc:specifiesParameter sc:DrawingSpeed ;
+    sc:targetValue "300"^^xsd:decimal ;
+    sc:unit "m/min" ;
+    rdfs:label "Target drawing speed 300 m/min" .
+
+sc:DieAngle_9d
+    a sc:ProcessParameterSpecification ;
+    sc:specifiesParameter sc:DieAngle ;
+    sc:targetValue "9"^^xsd:decimal ;
+    sc:unit "degree" ;
+    rdfs:label "Die angle 9 degree" .
+
+sc:DieMaterialSpec_TungstenCarbide
+    a sc:ProcessParameterSpecification ;
+    sc:specifiesParameter sc:DieMaterial ;
+    sc:targetValue "Tungsten Carbide" ;
+    rdfs:label "Die Material Spec: WC" .
+
+sc:LubricantSpec_LF220
+    a sc:ProcessParameterSpecification ;
+    sc:specifiesParameter sc:LubricantType ;
+    sc:targetValue "LF220" ;
+    rdfs:label "Lubricant Type LF220" .
+
+
+#################################################################
+# EQUIPMENT (drawing machine, dies, lubrication)
+#################################################################
+
+sc:DrawingMachine_07
+    a sc:DrawingMachine ;
+    rdfs:label "Drawing Machine 07" ;
+    sc:machineType "RPE_HUX_C_11pass_450mm_30kW" ;
+    sc:realizes sc:DrawingPlan_Recipe123 ;
+    sc:participatesIn sc:DryDrawingProcess_001 .
+
+sc:DiePack_A
+    a sc:DiePack ;
+    rdfs:label "Die Pack A" ;
+    sc:participatesIn sc:DryDrawingProcess_001 .
+
+sc:LubricationSystem_01
+    a sc:LubricationSystem ;
+    rdfs:label "Lubrication System 01" ;
+    sc:participatesIn sc:DryDrawingProcess_001 .
+
+
+#################################################################
+# PROCESS MEASUREMENTS (actual process run)
+#################################################################
+
+sc:SpeedMeasurement_Run001
+    a sc:Measurement ;
+    sc:measuresParameter sc:DrawingSpeed ;
+    sc:measuredValue "301"^^xsd:decimal ;
+    sc:unit "m/min" ;
+    rdfs:label "Actual drawing speed measured during run 001" .
+
+sc:EnergyUse_Run001
+    a sc:ProcessCharacteristic ;
+    sc:measuredValue "245.5"^^xsd:decimal ;
+    sc:unit "kWh_per_ton" ;
+    rdfs:label "Energy consumption for run 001" .
+
+sc:TheoreticalEnergy_Run001
+    a sc:ProcessCharacteristic ;
+    sc:measuredValue "250.39"^^xsd:decimal ;
+    sc:unit "kWh_per_ton" ;
+    rdfs:label "Theoretical energy for run 001" .
+
+#################################################################
+# DRY DRAWING PROCESS INSTANCE (the core)
+#################################################################
+
+sc:DryDrawingProcess_001
+    a sc:DryDrawingProcess ;
+    sc:hasInput sc:WireRod_5500um ;
+    sc:hasOutput sc:DrawnWire_1800um ;
+    sc:prescribedBy sc:DrawingPlan_Recipe123 ;
+    sc:hasMeasurement sc:SpeedMeasurement_Run001 ;
+    sc:hasCharacteristic sc:EnergyUse_Run001 ;
+    sc:hasCharacteristic sc:TheoreticalEnergy_Run001 ;
+    rdfs:label "Dry Drawing Process Run 001" .

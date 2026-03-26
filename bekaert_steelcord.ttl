@@ -1,0 +1,347 @@
+@prefix sc:    <http://scample.org/steelcord#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+# QUDT namespaces
+@prefix qudt:       <http://qudt.org/schema/qudt/> .
+@prefix unit:       <http://qudt.org/vocab/unit/> .
+@prefix quantity:   <http://qudt.org/vocab/quantitykind/> .
+
+# W3C Time Ontology
+@prefix time:       <http://www.w3.org/2006/time#> .
+
+
+#################################################################
+# Ontology Header
+#################################################################
+
+<http://scample.org/steelcord>
+    rdf:type owl:Ontology ;
+    owl:imports <http://www.w3.org/2006/time> ;  
+    owl:imports <http://qudt.org/2.1/schema/qudt> ;
+    owl:imports <http://qudt.org/2.1/vocab/unit> ;
+    owl:imports <http://qudt.org/2.1/vocab/quantitykind> ;
+
+    rdfs:label "Steel Cord Manufacturing Ontology (Core Vocabulary)" .
+
+
+#################################################################
+# Existing Classes (unchanged)
+#################################################################
+
+sc:MaterialEntity rdf:type owl:Class .
+sc:MaterialArtifact rdf:type owl:Class ; rdfs:subClassOf sc:MaterialEntity .
+sc:ManufacturingProcess rdf:type owl:Class .
+sc:PlanSpecification rdf:type owl:Class .
+sc:Equipment rdf:type owl:Class .
+sc:MaterialProperty rdf:type owl:Class .
+sc:ProcessParameter rdf:type owl:Class .
+sc:MaterialSpecification rdf:type owl:Class .
+sc:ProcessParameterSpecification rdf:type owl:Class .
+sc:Measurement rdf:type owl:Class .
+sc:ProcessCharacteristic rdf:type owl:Class .
+sc:EquipmentConfiguration rdf:type owl:Class .
+
+#################################################################
+# Added: Process identifiers & time properties
+#################################################################
+
+sc:processID rdf:type owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "Process Identifier" .
+
+#################################################################
+# Object Properties (unchanged)
+#################################################################
+
+sc:prescribedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:ManufacturingProcess ;
+    rdfs:range sc:PlanSpecification .
+
+sc:participatesIn rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:Equipment ;
+    rdfs:range sc:ManufacturingProcess .
+
+sc:realizes rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:Equipment ;
+    rdfs:range sc:PlanSpecification .
+
+sc:hasInput rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:ManufacturingProcess ;
+    rdfs:range sc:MaterialEntity .
+
+sc:hasOutput rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:ManufacturingProcess ;
+    rdfs:range sc:MaterialArtifact .
+
+sc:hasMaterialSpecification rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:MaterialArtifact ;
+    rdfs:range sc:MaterialSpecification .
+
+sc:hasParameter rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:PlanSpecification ;
+    rdfs:range sc:ProcessParameterSpecification .
+
+sc:specifiesProperty rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:MaterialSpecification ;
+    rdfs:range sc:MaterialProperty .
+
+sc:specifiesParameter rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:ProcessParameterSpecification ;
+    rdfs:range sc:ProcessParameter .
+
+sc:hasMeasurement rdf:type owl:ObjectProperty ;
+    rdfs:range sc:Measurement .
+
+sc:measuresProperty rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:Measurement ;
+    rdfs:range sc:MaterialProperty .
+
+sc:measuresParameter rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:Measurement ;
+    rdfs:range sc:ProcessParameter .
+
+sc:hasCharacteristic rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:ManufacturingProcess ;
+    rdfs:range sc:ProcessCharacteristic .
+
+sc:hasEquipmentConfiguration rdf:type owl:ObjectProperty ;
+    rdfs:domain sc:Equipment ;
+    rdfs:range sc:EquipmentConfiguration .
+
+
+#################################################################
+# Drawing processes (unchanged)
+#################################################################
+
+sc:DrawingProcess rdf:type owl:Class ; rdfs:subClassOf sc:ManufacturingProcess .
+sc:DryDrawingProcess rdf:type owl:Class ; rdfs:subClassOf sc:DrawingProcess .
+sc:WetDrawingProcess rdf:type owl:Class ; rdfs:subClassOf sc:DrawingProcess .
+
+sc:DrawingPlanSpecification rdf:type owl:Class ;
+    rdfs:subClassOf sc:PlanSpecification .
+
+
+#################################################################
+# Material subclasses, Equipment, Properties, Parameters (unchanged)
+#################################################################
+
+sc:WireRod rdf:type owl:Class ; rdfs:subClassOf sc:MaterialArtifact .
+sc:DrawnWire rdf:type owl:Class ; rdfs:subClassOf sc:MaterialArtifact .
+
+sc:DrawingMachine rdf:type owl:Class ; rdfs:subClassOf sc:Equipment .
+sc:DiePack rdf:type owl:Class ; rdfs:subClassOf sc:Equipment .
+sc:LubricationSystem rdf:type owl:Class ; rdfs:subClassOf sc:Equipment .
+
+sc:Diameter rdf:type sc:MaterialProperty .
+sc:TensileStrength rdf:type sc:MaterialProperty .
+sc:CarbonContent rdf:type sc:MaterialProperty .
+
+sc:DrawingSpeed rdf:type sc:ProcessParameter .
+sc:LubricantType rdf:type sc:ProcessParameter .
+sc:DieMaterial rdf:type sc:ProcessParameter .
+sc:DieAngle rdf:type sc:ProcessParameter .
+
+
+#################################################################
+# MATERIALS (Input & Output) with QUDT measurement alignment
+#################################################################
+
+sc:WireRod_5500um
+    a sc:WireRod ;
+    sc:hasMaterialSpecification sc:DiameterSpec_5500um ;
+    sc:hasMaterialSpecification sc:CarbonContentSpec_08percent ;
+    sc:hasMaterialSpecification sc:TensileStrength_1177MPa ;
+    sc:hasMeasurement sc:DiameterMeasurement_RodBatch ;
+    rdfs:label "Wire Rod 5.5mm (Batch 07)" .
+
+sc:DrawnWire_1800um
+    a sc:DrawnWire ;
+    sc:hasMaterialSpecification sc:DiameterSpec_1800um ;
+    sc:hasMaterialSpecification sc:TensileStrength_2117MPa ;
+    sc:hasMeasurement sc:DiameterMeasurement_Output ;
+    rdfs:label "Drawn Wire 1.8mm (Output)" .
+
+
+#################################################################
+# MATERIAL SPECIFICATIONS (QUDT)
+#################################################################
+
+sc:DiameterSpec_5500um
+    a sc:MaterialSpecification ;
+    sc:specifiesProperty sc:Diameter ;
+    qudt:numericValue "5.5"^^xsd:decimal ;
+    qudt:unit unit:MilliM ;
+    qudt:hasQuantityKind quantity:Diameter .
+
+sc:DiameterSpec_1800um
+    a sc:MaterialSpecification ;
+    sc:specifiesProperty sc:Diameter ;
+    qudt:numericValue "1.8"^^xsd:decimal ;
+    qudt:unit unit:MilliM ;
+    qudt:hasQuantityKind quantity:Diameter .
+
+sc:CarbonContentSpec_08percent 
+    a sc:MaterialSpecification ;
+    sc:specifiesProperty sc:CarbonContent ;
+    qudt:numericValue "0.8"^^xsd:decimal ;
+    qudt:unit unit:PERCENT ;
+    qudt:hasQuantityKind quantity:MassFraction .
+
+sc:TensileStrength_1177MPa 
+    a sc:MaterialSpecification ;
+    sc:specifiesProperty sc:TensileStrength ;
+    qudt:numericValue "1177"^^xsd:decimal ;
+    qudt:unit unit:MPa ;
+    qudt:hasQuantityKind quantity:TensileStrength .
+
+sc:TensileStrength_2117MPa 
+    a sc:MaterialSpecification ;
+    sc:specifiesProperty sc:TensileStrength ;
+    qudt:numericValue "2117"^^xsd:decimal ;
+    qudt:unit unit:MPa ;
+    qudt:hasQuantityKind quantity:TensileStrength .
+
+
+#################################################################
+# MATERIAL MEASUREMENTS (QUDT)
+#################################################################
+
+sc:DiameterMeasurement_RodBatch
+    a sc:Measurement ;
+    sc:measuresProperty sc:Diameter ;
+    qudt:numericValue "5.49"^^xsd:decimal ;
+    qudt:unit unit:MilliM ;
+    qudt:hasQuantityKind quantity:Diameter .
+
+sc:DiameterMeasurement_Output
+    a sc:Measurement ;
+    sc:measuresProperty sc:Diameter ;
+    qudt:numericValue "1.802"^^xsd:decimal ;
+    qudt:unit unit:MilliM ;
+    qudt:hasQuantityKind quantity:Diameter .
+
+
+#################################################################
+# DRAWING PLAN SPECIFICATION (unchanged structure)
+#################################################################
+
+sc:DrawingPlan_Recipe123
+    a sc:DrawingPlanSpecification ;
+    sc:hasParameter sc:SpeedSpec_300mpm ;
+    sc:hasParameter sc:DieAngle_9d ;
+    sc:hasParameter sc:DieMaterialSpec_TungstenCarbide ;
+    sc:hasParameter sc:LubricantSpec_LF220 ;
+    rdfs:label "Drawing Plan Recipe 123" .
+
+
+#################################################################
+# PROCESS PARAMETER SPECIFICATIONS (QUDT)
+#################################################################
+
+sc:SpeedSpec_300mpm
+    a sc:ProcessParameterSpecification ;
+    sc:specifiesParameter sc:DrawingSpeed ;
+    qudt:numericValue "300"^^xsd:decimal ;
+    qudt:unit unit:MeterPerMinute ;
+    qudt:hasQuantityKind quantity:LinearVelocity ;
+    rdfs:label "Target drawing speed 300 m/min" .
+
+sc:DieAngle_9d
+    a sc:ProcessParameterSpecification ;
+    sc:specifiesParameter sc:DieAngle ;
+    qudt:numericValue "9"^^xsd:decimal ;
+    qudt:unit unit:DEG ;
+    qudt:hasQuantityKind quantity:Angle ;
+    rdfs:label "Die angle 9 degree" .
+
+sc:DieMaterialSpec_TungstenCarbide
+    a sc:ProcessParameterSpecification ;
+    sc:specifiesParameter sc:DieMaterial ;
+    qudt:numericValue "1"^^xsd:decimal ; # symbolic
+    qudt:unit unit:UNITLESS ;
+    qudt:hasQuantityKind quantity:MaterialType ;
+    rdfs:label "Die Material Spec: WC" .
+
+sc:LubricantSpec_LF220
+    a sc:ProcessParameterSpecification ;
+    sc:specifiesParameter sc:LubricantType ;
+    qudt:numericValue "1"^^xsd:decimal ;
+    qudt:unit unit:UNITLESS ;
+    rdfs:label "Lubricant Type LF220" .
+
+
+#################################################################
+# EQUIPMENT (unchanged)
+#################################################################
+
+sc:RPE_HUX_C_11pass_450mm_30kW a sc:EquipmentConfiguration .
+
+sc:DrawingMachine_07
+    a sc:DrawingMachine ;
+    sc:hasEquipmentConfiguration sc:RPE_HUX_C_11pass_450mm_30kW ;
+    sc:realizes sc:DrawingPlan_Recipe123 ;
+    sc:participatesIn sc:DryDrawingProcess_001 .
+
+sc:DiePack_A a sc:DiePack ;
+    sc:participatesIn sc:DryDrawingProcess_001 .
+
+sc:LubricationSystem_01 a sc:LubricationSystem ;
+    sc:participatesIn sc:DryDrawingProcess_001 .
+
+
+#################################################################
+# PROCESS MEASUREMENTS (QUDT)
+#################################################################
+
+sc:SpeedMeasurement_Run001
+    a sc:Measurement ;
+    sc:measuresParameter sc:DrawingSpeed ;
+    qudt:numericValue "301"^^xsd:decimal ;
+    qudt:unit unit:MeterPerMinute ;
+    qudt:hasQuantityKind quantity:LinearVelocity .
+
+sc:EnergyUse_Run001
+    a sc:ProcessCharacteristic ;
+    qudt:numericValue "245.5"^^xsd:decimal ;
+    qudt:unit unit:KiloW-HR-PER-TON ;
+    qudt:hasQuantityKind quantity:EnergyPerMass .
+
+sc:TheoreticalEnergy_Run001
+    a sc:ProcessCharacteristic ;
+    qudt:numericValue "250.39"^^xsd:decimal ;
+    qudt:unit unit:KiloW-HR-PER-TON ;
+    qudt:hasQuantityKind quantity:EnergyPerMass .
+
+
+#################################################################
+# TIME (W3C Time Ontology)
+#################################################################
+
+sc:DryDrawingProcess_001_Start
+    a time:Instant ;
+    time:inXSDDateTime "2026-03-24T09:30:00+01:00"^^xsd:dateTime .
+
+sc:DryDrawingProcess_001_End
+    a time:Instant ;
+    time:inXSDDateTime "2026-03-24T09:47:00+01:00"^^xsd:dateTime .
+
+
+#################################################################
+# DRY DRAWING PROCESS INSTANCE (full final)
+#################################################################
+
+sc:DryDrawingProcess_001
+    a sc:DryDrawingProcess ;
+    sc:processID "DDP-Run001-20260324" ;
+    sc:hasInput sc:WireRod_5500um ;
+    sc:hasOutput sc:DrawnWire_1800um ;
+    sc:prescribedBy sc:DrawingPlan_Recipe123 ;
+    sc:hasMeasurement sc:SpeedMeasurement_Run001 ;
+    sc:hasCharacteristic sc:EnergyUse_Run001 ;
+    sc:hasCharacteristic sc:TheoreticalEnergy_Run001 ;
+    time:hasBeginning sc:DryDrawingProcess_001_Start ;
+    time:hasEnd       sc:DryDrawingProcess_001_End ;
+    rdfs:label "Dry Drawing Process Run 001" .

@@ -1,145 +1,171 @@
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix wa: <https://data.example.com/wiper-arm/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix : <https://TianTangvanhoecke.github.io/KG_Lab2/vocab.ttl#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-:Person a rdfs:Class ;
-    rdfs:label "Person"@en ;
-    rdfs:comment "A human being."@en ;
-    rdfs:subClassOf foaf:Person .
+wa:TraceabilityOntology
+    a owl:Ontology ;
+    rdfs:label "Wiper Arm Traceability Ontology" .
 
-:Hobby a rdfs:Class ;
-    rdfs:label "Hobby"@en ;
-    rdfs:comment "An activity a person likes and enjoys to do in the free time"@en .
+#################################################################
+# Classes
+#################################################################
 
-:name a rdf:Property ;
+wa:ProductSpecification
+    a owl:Class ;
+    rdfs:label "Product specification" ;
+    rdfs:comment """
+        A reusable definition of the intended product construction
+        or customer-specific product configuration.
+    """ .
+
+wa:SAPMaterialCode
+    a owl:Class ;
+    rdfs:label "SAP material code" ;
+    rdfs:comment """
+        A product or material identifier assigned by an ERP system (SAP for Bekaert).
+    """ .
+
+wa:ProductionBatch
+    a owl:Class ;
+    rdfs:label "Production batch" ;
+    rdfs:comment """
+        A quantity managed as one production group at a particular
+        stage of manufacturing.
+    """ .
+
+wa:Spool
+    a owl:Class ;
+    rdfs:label "Spool" ;
+    rdfs:comment """
+        A traceable quantity of material wound onto a spool and
+        identified at a production stage.
+    """ .
+
+wa:ManufacturingProcess
+    a owl:Class ;
+    rdfs:label "Manufacturing process" ;
+    rdfs:comment """
+        A reusable type of manufacturing transformation, such as
+        wire drawing, patenting, coating or rolling.
+    """ .
+
+wa:ProcessExecution
+    a owl:Class ;
+    rdfs:label "Process execution" ;
+    rdfs:comment """
+        One actual occurrence of a manufacturing process with
+        identifiable inputs, outputs, equipment and time interval.
+    """ .
+
+wa:Equipment
+    a owl:Class ;
+    rdfs:label "Equipment" ;
+    rdfs:comment """
+        A physical production resource used for a process execution.
+    """ .
+
+wa:ProductionSite
+    a owl:Class ;
+    rdfs:label "Production site" ;
+    rdfs:comment """
+        A plant or production location at which manufacturing occurs.
+    """ .
+
+#################################################################
+# Object properties
+#################################################################
+
+wa:identifiesSpecification
+    a owl:ObjectProperty ;
+    rdfs:label "identifies specification" ;
+    rdfs:domain wa:ERPProductCode ;
+    rdfs:range wa:ProductSpecification .
+
+wa:classifiedBy
+    a owl:ObjectProperty ;
+    rdfs:label "classified by" ;
+    rdfs:domain wa:ProductionBatch ;
+    rdfs:range wa:ProductSpecification .
+
+wa:partOfBatch
+    a owl:ObjectProperty ;
+    rdfs:label "part of batch" ;
+    rdfs:domain wa:Spool ;
+    rdfs:range wa:ProductionBatch .
+
+wa:consumedBy
+    a owl:ObjectProperty ;
+    rdfs:label "consumed by" ;
+    rdfs:domain wa:Spool ;
+    rdfs:range wa:ProcessExecution .
+
+wa:producesSpool
+    a owl:ObjectProperty ;
+    rdfs:label "produces spool" ;
+    rdfs:domain wa:ProcessExecution ;
+    rdfs:range wa:Spool .
+
+wa:realizesProcess
+    a owl:ObjectProperty ;
+    rdfs:label "realizes process" ;
+    rdfs:domain wa:ProcessExecution ;
+    rdfs:range wa:ManufacturingProcess .
+
+wa:performedOn
+    a owl:ObjectProperty ;
+    rdfs:label "performed on" ;
+    rdfs:domain wa:ProcessExecution ;
+    rdfs:range wa:Equipment .
+
+wa:occurredAt
+    a owl:ObjectProperty ;
+    rdfs:label "occurred at" ;
+    rdfs:domain wa:ProcessExecution ;
+    rdfs:range wa:ProductionSite .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+wa:erpCode
+    a owl:DatatypeProperty ;
+    rdfs:label "ERP code" ;
+    rdfs:domain wa:ERPProductCode ;
+    rdfs:range xsd:string .
+
+wa:batchIdentifier
+    a owl:DatatypeProperty ;
+    rdfs:label "batch identifier" ;
+    rdfs:domain wa:ProductionBatch ;
+    rdfs:range xsd:string .
+
+wa:spoolIdentifier
+    a owl:DatatypeProperty ;
+    rdfs:label "spool identifier" ;
+    rdfs:domain wa:Spool ;
+    rdfs:range xsd:string .
+
+wa:executionIdentifier
+    a owl:DatatypeProperty ;
+    rdfs:label "execution identifier" ;
+    rdfs:domain wa:ProcessExecution ;
+    rdfs:range xsd:string .
+
+wa:startTime
+    a owl:DatatypeProperty ;
+    rdfs:label "start time" ;
+    rdfs:domain wa:ProcessExecution ;
+    rdfs:range xsd:dateTime .
+
+wa:endTime
+    a owl:DatatypeProperty ;
+    rdfs:label "end time" ;
+    rdfs:domain wa:ProcessExecution ;
+    rdfs:range xsd:dateTime .
+
+wa:name
+    a owl:DatatypeProperty ;
     rdfs:label "name" ;
-    rdfs:comment "A name of any resource." ;
-    rdfs:domain rdfs:Resource ;
-    rdfs:range rdfs:Literal ;
-    rdfs:subPropertyOf foaf:name .
-
-:hasNationality a rdf:Property ;
-    rdfs:label "has nationality"@en ;
-    rdfs:comment "The nationality of a person"@en ;
-    rdfs:domain :Person ;
-    rdfs:range rdfs:Literal .
-
-:hasAge a rdf:Property ;
-    rdfs:label "has age"@en ;
-    rdfs:comment "Age of a person"@en ;
-    rdfs:domain :Person ;
-    rdfs:range xsd:integer ;
-    rdfs:subPropertyOf foaf:age .
-
-:hasParent a rdf:Property ;
-    rdfs:label "has parent"@en ;
-    rdfs:comment "The parent of a person"@en ;
-    rdfs:domain :Person ;
-    rdfs:range :Person .
-
-:likesFictionalCharacter a rdf:Property ;
-    rdfs:label "likes character"@en ;
-    rdfs:comment "A fictional character that a person likes in movies, books, theatre, etc."@en ;
-    rdfs:domain :Person ;
-    rdfs:range :FictionalCharacter .
-
-:hasHobby a rdf:Property ;
-    rdfs:label "Hobby"@en ;
-    rdfs:comment "An activity a person likes to do as a hobby."@en ;
-    rdfs:domain :Person ;
-    rdfs:range :Hobby .
-
-:knows a rdf:Property ;
-    rdfs:label "knows"@en ;
-    rdfs:comment "A relationship between two people."@en ;
-    rdfs:domain :Person ;
-    rdfs:range :Person ;
-    rdfs:subPropertyOf foaf:knows .
-
-:Student a rdfs:Class ;
-    rdfs:label "Student"@en ;
-    rdfs:comment "A person who is enrolled in an educational institution."@en ;
-    rdfs:subClassOf :Person .  
-
-:hasStudentID a rdf:Property ;
-    rdfs:label "has student ID"@en ;
-    rdfs:comment "Assigns a unique identifier to a student within an educational institution."@en ;
-    rdfs:domain :Student ;  # The "Owner" of the ID
-    rdfs:range xsd:string . # The "Value" of the ID (just text)
-
-:Course a rdfs:Class ;
-    rdfs:label "Course" ;
-    rdfs:comment "A course offered at an educational institution."@en .
-
-:enrolledIn a rdf:Property ;
-    rdfs:label "enrolled in" ;
-    rdfs:comment "Relates a student to a course they are enrolled in."@en ;
-    rdfs:domain :Student ;
-    rdfs:range :Course .
-
-:FictionalCharacter a rdfs:Class ;
-    rdfs:label "Fictional Character"@en ;
-    rdfs:comment "A character that appears in stories, movies, etc."@en .
-
-:playedBy a rdf:Property ;
-    rdfs:label "Played By" ;
-    rdfs:comment "The real-world actor who portrays this fictional character"@en ;
-    rdfs:domain :FictionalCharacter ;
-    rdfs:range :Person .
-
-:Photo a rdfs:Class ;
-    rdfs:label "Photo"@en ;
-    rdfs:comment "A digital photo found on the web"@en ;
-    rdfs:subClassOf foaf:Image .
-
-:hasTitle a rdf:Property ;
-    rdfs:label "Photo Title" ;
-    rdfs:comment "Title of Photo" ;
-    rdfs:domain :Photo ;
-    rdfs:range rdfs:Literal ;
-    rdfs:subPropertyOf foaf:name .
-
-:hasCreator a rdf:Property ;
-    rdfs:label "Creator" ;
-    rdfs:comment "The person who took the photograph"@en ;
-    rdfs:domain :Photo ;
-    rdfs:range :Person ;
-    rdfs:subPropertyOf foaf:maker .
-
-:depicts a rdf:Property ;
-    rdfs:label "depicts"@en ;
-    rdfs:comment "Something that the photo shows (person, character, object, etc.)"@en ;
-    rdfs:domain :Photo ;
-    rdfs:range rdfs:Resource ;
-    rdfs:subPropertyOf foaf:depicts .
-
-:depictsPerson a rdf:Property ;
-    rdfs:label "Depicts Person" ;
-    rdfs:comment "A person shown in the photograph"@en ;
-    rdfs:domain :Photo ;
-    rdfs:range :Person ;
-    rdfs:subPropertyOf foaf:depicts .
-
-:takenAt a rdf:Property ;
-    rdfs:label "Location" ;
-    rdfs:comment "The place where the photo was captured"@en ;
-    rdfs:domain :Photo ;
-    rdfs:range :Place .
-
-:description a rdf:Property ;
-    rdfs:label "Description" ;
-    rdfs:comment "A short summary of the photo content"@en ;
-    rdfs:domain :Photo ;
-    rdfs:range rdfs:Literal .
-
-:fileLocation a rdf:Property ;
-    rdfs:label "File URL" ;
-    rdfs:comment "The web address where the image file is hosted"@en ;
-    rdfs:domain :Photo ;
-    rdfs:range rdfs:Resource . # Range is a Resource (URL), not just text
-
-:Place a rdfs:Class ;
-    rdfs:label "Place" ;
-    rdfs:comment "A physical location where an event or activity took place"@en .
+    rdfs:range xsd:string .

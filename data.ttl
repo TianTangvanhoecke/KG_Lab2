@@ -1,80 +1,64 @@
+@prefix wa: <https://data.example.com/wiper-arm/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix vocab: <https://TianTangvanhoecke.github.io/KG_Lab2/vocab.ttl#> .
 
-@prefix : <https://TianTangvanhoecke.github.io/KG_Lab2/data.ttl#> .
+wa:product-specification/wiper-arm-A
+    a wa:ProductSpecification ;
+    wa:name "Wiper arm type A" .
 
-:me
-  a vocab:Person, vocab:Student ;
-  vocab:name "Tian Tang" ;
-  vocab:hasNationality "Chinese" ;
-  vocab:hasAge 38 ;
-  vocab:hasHobby :running ;
-  vocab:hasStudentID "s123456" ;
-  vocab:enrolledIn :knowledge-graphs-2025 ;
-  vocab:knows <https://seppesantens.github.io/rdf-lab2/data.ttl#me> ,
-              <https://pikajojo.github.io/Knowlege_Graph_Lab2/data.ttl#me>  .
+wa:sap-material-code/10001234
+    a wa:ERPProductCode ;
+    wa:erpCode "10001234" ;
+    wa:identifiesSpecification
+        wa:product-specification/wiper-arm-A .
 
-:annaT
-  a vocab:Person, vocab:Student ;
-  vocab:name "Anna Tang" ;
-  vocab:hasNationality "Chinese" ;
-  vocab:hasParent :me ;
-  vocab:hasAge 5 ;
-  vocab:enrolledIn :derdekleuter ;
-  vocab:likesFictionalCharacter :mr_bean ;
-  vocab:hasHobby :drawing .
+wa:batch/input-batch-001
+    a wa:ProductionBatch ;
+    wa:batchIdentifier "INPUT-BATCH-001" .
 
-:rowanAtkinson a vocab:Person ;
-  vocab:name "Rowan Sebastian Atkinson" ;
-  vocab:hasNationality "English" ;
-  vocab:hasAge 71 ;
-  vocab:hasHobby :carRacing .
+wa:spool/input-spool-001
+    a wa:Spool ;
+    wa:spoolIdentifier "INPUT-SPOOL-001" ;
+    wa:partOfBatch wa:batch/input-batch-001 ;
+    wa:consumedBy wa:execution/rolling-9001 .
 
-:mr_bean a vocab:FictionalCharacter ;
-  vocab:name "Mr Bean" ;
-  vocab:playedBy :rowanAtkinson .
+wa:process/rolling
+    a wa:ManufacturingProcess ;
+    wa:name "Rolling" .
 
-:unknownPerson a vocab:Person ;
-  vocab:name "Unknown" .
+wa:equipment/rolling-line-03
+    a wa:Equipment ;
+    wa:name "Rolling line 03" .
 
-:knowledge-graphs-2025 a vocab:Course ;
-    vocab:name "Knowledge Graphs 2025" ;
-    rdfs:seeAlso <https://studiekiezer.ugent.be/studiefiche/nl/E018160/2025> .
+wa:site/plant-A
+    a wa:ProductionSite ;
+    wa:name "Plant A" .
 
-:derdekleuter a vocab:Course ;
-  vocab:name "Leeuwen- en Giraffenklas" ;
-  rdfs:seeAlso <https://derdekleutervcz.blogspot.com/> .
+wa:execution/rolling-9001
+    a wa:ProcessExecution ;
+    wa:executionIdentifier "ROLLING-9001" ;
+    wa:realizesProcess wa:process/rolling ;
+    wa:performedOn wa:equipment/rolling-line-03 ;
+    wa:occurredAt wa:site/plant-A ;
+    wa:startTime
+        "2026-10-20T08:13:00"^^xsd:dateTime ;
+    wa:endTime
+        "2026-10-20T09:47:00"^^xsd:dateTime ;
+    wa:producesSpool
+        wa:spool/output-spool-101,
+        wa:spool/output-spool-102 .
 
-:running a vocab:Hobby . 
-:drawing a vocab:Hobby .
-:carRacing a vocab:Hobby .
+wa:batch/output-batch-010
+    a wa:ProductionBatch ;
+    wa:batchIdentifier "OUTPUT-BATCH-010" ;
+    wa:classifiedBy
+        wa:product-specification/wiper-arm-A .
 
-:london a vocab:Place .
-:zwevegem a vocab:Place .
-:gentbrugge a vocab:Place .
+wa:spool/output-spool-101
+    a wa:Spool ;
+    wa:spoolIdentifier "OUTPUT-SPOOL-101" ;
+    wa:partOfBatch wa:batch/output-batch-010 .
 
-:mrBeanPhoto a vocab:Photo ;
-    vocab:hasTitle "Mr Bean's typical smile" ;
-    vocab:hasCreator :unknownPerson ;
-    vocab:description "A photo of Mr Bean, the fictional character played by Rowan Atkinson." ;
-    vocab:depicts :mr_bean ;
-    vocab:takenAt :london ;
-    vocab:fileLocation <https://commons.wikimedia.org/wiki/Category:Mr._Bean#/media/File:Mr._Bean_2007.jpg> .
-
-:meRunningPhoto a vocab:Photo ;
-  vocab:hasTitle "Bashirs run sportshots";
-  vocab:hasCreator :unknownPerson ;
-  vocab:description "A photo of me running in the Bashirs half marathon event in GentBrugge" ;
-  vocab:depictsPerson :me ;
-  vocab:takenAt :gentbrugge ;
-  vocab:fileLocation <https://sportshots.ai/nl/events/bashirs-run-2026?search=tian&photo=0221a1a5-da81-448a-b45a-79893e7a1803> .
-
-:annaTClassPhoto a vocab:Photo ;
-  vocab:hasTitle "Leeuwen Class Photo";
-  vocab:hasCreator :unknownPerson ;
-  vocab:description "A funny class photo of my daugther Anna in the school" ;
-  vocab:depictsPerson :annaT ;
-  vocab:takenAt :zwevegem ;
-  vocab:fileLocation <https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA3W16E9P6TAlvh-yy1MwPy-A421xzEMZbSLhXmPK46HO_gIaM50bfFnGdJk4jW-JxKWl0ayN_bPfawFspX4OeQw8iIoWxQQJ89G5q-Y2ce88bv_JOtEB4eD3Fv3g_mG7njkWQExizn-uQtkHd62FzgGGypTCP5PBb6oLAQxd1eu0mBTIJkxVavTQDVb0/s2048/565dc16a-50e0-45a6-b139-8f36ce6e3980.jpg> .
+wa:spool/output-spool-102
+    a wa:Spool ;
+    wa:spoolIdentifier "OUTPUT-SPOOL-102" ;
+    wa:partOfBatch wa:batch/output-batch-010 .

@@ -16,8 +16,8 @@ from as_sql import query_datakap
 class SynapseConfig:
     server: str = os.getenv("SYNAPSE_SERVER", "azweuprdglosynsqlsrv.database.windows.net")
     database: str = os.getenv("SYNAPSE_DATABASE", "azweuprdbekglobalsynapse")
-    username: str = os.getenv("SYNAPSE_USERNAME", "mesdlpaaaiuser")
-    password: str = os.getenv("SYNAPSE_PASSWORD", "M3sdlp3Ai@2020")
+    username: str = os.getenv("SYNAPSE_USERNAME", "")
+    password: str = os.getenv("SYNAPSE_PASSWORD", "")
     driver: str = os.getenv("SYNAPSE_DRIVER", "{ODBC Driver 17 for SQL Server}")
 
 
@@ -26,7 +26,7 @@ class SynapseConfig:
 # processing step (final goods), and level number increases moving *backwards*
 # towards the raw material (e.g. for WIPER_ARM_WIRE: 1=rolling, 2=coating,
 # 3=patenting, 4=drawing, 5=pickling).
-PRODUCTION_CONFIG_PATH = r"C:\Users\tian.tang\OneDrive - Bekaert\Desktop\KNODI\config\production_config.yaml"
+PRODUCTION_CONFIG_PATH = r"production_config.yaml"
 PRODUCTION_CONFIG_PRODUCT = "WIPER_ARM_WIRE"
 PRODUCTION_CONFIG_SITE = "BE01"
 

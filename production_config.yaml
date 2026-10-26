@@ -1,0 +1,287 @@
+version: 2.0.0
+meta:
+  owner: bekaert
+  description: >-
+    Generic product production configuration from wire rod raw material to finished product.
+    Level convention follows traceability data: level 1 is the last processing step,
+    and the highest level is the initial wire rod step.
+  updated_at: 2026-07-03
+  level_convention:
+    direction: descending
+    level_1: final_step
+    level_max: initial_step
+
+systems:
+  sap:
+    description: data system for production, quality, material specifications, and order management etc.
+  scada:
+    description: server/location/part/description info for machines and sensors and time series data
+
+sites:
+  BE01:
+    description: Belgium plant 01 (Zwevegem)
+    country: BE
+
+process_step_catalog:
+  pickling:
+    display_name: Pickling
+    description: Pickling process for wire rod/raw input
+
+  drawing:
+    display_name: Drawing
+    description: Wire drawing reduction process
+
+  patenting:
+    display_name: Patenting
+    description: Heat treatment process
+
+  coating:
+    display_name: Coating
+    description: Surface coating process
+
+  rolling:
+    display_name: Rolling
+    description: Final rolling/forming process
+
+
+machine_catalog:
+  M_47006:
+    canonical_name: rolling_line_47006
+    site: BE01
+    process_step: rolling
+    aliases:
+      sap:
+        site: BE01
+        code: "47006"
+        qualified_id: "BE01:47006"
+      scada:
+        server: "bezwvai1pd"
+        location: "LZ6"
+        part: ""
+    parameters: []
+
+  M_410031:
+    canonical_name: rolling_line_410031
+    site: BE01
+    process_step: rolling
+    aliases:
+      sap:
+        site: BE01
+        code: "410031"
+        qualified_id: "BE01:410031"
+      scada:
+        server: "bezwvai1pd"
+        location: "M410031"
+        part: ""
+    parameters: []
+
+  M_46157:
+    canonical_name: coating_line_46157
+    site: BE01
+    process_step: coating
+    aliases:
+      sap:
+        site: BE01
+        code: "46157"
+        qualified_id: "BE01:46157"
+      scada:
+        server: "bezwvai1THI"
+        location: "IVD157"
+        part: ""
+    parameters: []
+
+  M_46100P:
+    canonical_name: patenting_line_46100P
+    site: BE01
+    process_step: patenting
+    aliases:
+      sap:
+        site: BE01
+        code: "46100P"
+        qualified_id: "BE01:46100P"
+      scada:
+        server: "bezwvai1THI"
+        location: "Temp100"
+        part: ""
+    parameters: []
+
+  M_45021:
+    canonical_name: drawing_line_45021
+    site: BE01
+    process_step: drawing
+    aliases:
+      sap:
+        site: BE01
+        code: "45021"
+        qualified_id: "BE01:45021"
+      scada:
+        server: "bezwvai1stb"
+        location: "B-mach"
+        part: "B21"
+    parameters: []
+
+  M_45020:
+    canonical_name: drawing_line_45020
+    site: BE01
+    process_step: drawing
+    aliases:
+      sap:
+        site: BE01
+        code: "45020"
+        qualified_id: "BE01:45020"
+      scada:
+        server: "bezwvai1stb"
+        location: "B-Mach"
+        part: "B20"
+    parameters: []
+
+  M_45025:
+    canonical_name: drawing_line_45025
+    site: BE01
+    process_step: drawing
+    aliases:
+      sap:
+        site: BE01
+        code: "45025"
+        qualified_id: "BE01:45025"
+      scada:
+        server: "bezwvai1stb"
+        location: "B-mach"
+        part: "B25"
+    parameters: []
+
+  M_45024:
+    canonical_name: drawing_line_45024
+    site: BE01
+    process_step: drawing
+    aliases:
+      sap:
+        site: BE01
+        code: "45024"
+        qualified_id: "BE01:45024"
+      scada:
+        server: "bezwvai1stb"
+        location: "B-Mach"
+        part: "B24"
+    parameters: []
+
+  M_45030:
+    canonical_name: pickling_line_45030
+    site: BE01
+    process_step: pickling
+    aliases:
+      sap:
+        site: BE01
+        code: "45030"
+        qualified_id: "BE01:45030"
+      scada:
+        server: "bezwvai1stb"
+        location: "Klaarderij Stdr"
+        part: ""
+    parameters: []
+
+products:
+  WIPER_ARM_WIRE:
+    product_name: "Wiper Arm Wire"
+    site: "BE01"
+
+    # Mirrors process_steps_map while staying generic for future products.
+    process_levels:
+      1: rolling
+      2: coating
+      3: patenting
+      4: drawing
+      5: pickling
+
+    # ZPP_M06's MATL_GROUP is the reliable ground-truth process-step indicator for a
+    # trace row (confirmed against live data, cross-checked against the row's own
+    # production machine). Unlike TCTHIELEV, it is NOT sensitive to how many levels a
+    # given chain happens to have (material scrapped partway through processing) nor to
+    # a step occurring more than once in one chain (e.g. re-patenting) -- it always
+    # names the true step for that specific row.
+    matl_group_process_step:
+      FG_WPC: rolling
+      WIP_BZ: coating
+      WIP_IP: patenting
+      WIP_DD: drawing
+      WIP_PI: pickling
+
+    # Mirrors material_numbers_map.
+    material_codes:
+      - "102189"
+      - "102292"
+      - "351285"
+      - "102471"
+      - "234511"
+      - "102454"
+      - "108320"
+      - "330748"
+      - "108321"
+      - "102481"
+      - "330747"
+      - "102276"
+      - "334471"
+      - "312703"
+      - "337545"
+      - "369007"
+      - "364411"
+      - "102451"
+      - "102287"
+      - "350787"
+      - "234513"
+      - "354123"
+      - "336173"
+      - "311959"
+
+    # Step-level allowed machines (easy to maintain and re-use by route variants).
+    step_machine_pool:
+      rolling: [M_47006, M_410031]
+      coating: [M_46157]
+      patenting: [M_46100P]
+      drawing: [M_45021, M_45020, M_45025, M_45024]
+      pickling: [M_45030]
+
+    # Explicit route variants transformed from your production_route examples.
+    route_variants:
+      - variant_id: R1
+        description: "Rolling 47006 + Drawing 45021"
+        by_level:
+          5: M_45030
+          4: M_45021
+          3: M_46100P
+          2: M_46157
+          1: M_47006
+
+      - variant_id: R2
+        description: "Rolling 47006 + Drawing 45020"
+        by_level:
+          5: M_45030
+          4: M_45020
+          3: M_46100P
+          2: M_46157
+          1: M_47006
+
+      - variant_id: R3
+        description: "Rolling 410031 + Drawing 45024"
+        by_level:
+          5: M_45030
+          4: M_45024
+          3: M_46100P
+          2: M_46157
+          1: M_410031
+
+validation_rules:
+  - name: process_levels_must_start_at_1
+    enabled: true
+  - name: process_levels_must_be_contiguous
+    enabled: true
+  - name: process_level_steps_must_exist_in_catalog
+    enabled: true
+  - name: machine_refs_must_exist_in_machine_catalog
+    enabled: true
+  - name: machine_site_must_exist_in_sites
+    enabled: true
+  - name: route_variants_levels_must_match_process_levels
+    enabled: true
+  - name: route_variants_machine_must_match_step_machine_pool
+    enabled: true
